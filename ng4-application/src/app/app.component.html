@@ -1,0 +1,49 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to {{title}}!
+  </h1>
+</div>
+
+<div *ngIf="!authenticated">
+  <div style="margin:10px" *ngIf="loginInProcess">
+    Username: <input type="text" [(ngModel)]="loginObj.username" />
+    Password: <input type="password" [(ngModel)]="loginObj.password" />
+    <button class="btn btn-primary btn-sm" (click)="loginConfirm()">OK</button>
+    <button class="btn btn-danger btn-sm" (click)="loginCancel()">Cancel</button>
+  </div>
+  <button class="btn btn-primary btn-sm" (click)="login()" style="margin:10px" *ngIf="!loginInProcess"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
+</div>
+
+<div *ngIf="authenticated">
+  Welcome! {{loginObj.username}}
+  <button class="btn btn-danger btn-sm" (click)="logout()">Logout</button>
+
+  <br />
+  <hr />
+
+  <h1>Demo for Excel Upload</h1>
+
+  <a href="http://localhost:9300/samples/products.xlsx" target="_blank">Excel Sample Download</a>
+
+  <hr />
+
+  <a class="btn btn-sm btn-primary" href="javascript:;">Upload Excel File
+    <input [(ngModel)]="excelUpload.FilePath" (change)="fileChange($event)" name="ExcelFPath"
+           size="10" type="file"></a>
+
+
+  <br />
+  <hr />
+
+<h2>Websocket message from spring-boot-application: </h2>
+<table *ngIf="messages">
+  <tr *ngFor="let message of messages">
+    <td>
+      {{message}}
+    </td>
+  </tr>
+</table>
+
+
+</div>

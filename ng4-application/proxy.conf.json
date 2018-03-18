@@ -1,0 +1,6 @@
+{
+  "/erp": {
+    "target": "http://localhost:9300",
+    "secure": false
+  }
+}
