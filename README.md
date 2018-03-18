@@ -1,4 +1,4 @@
-# spring-websocket-angular-upload-excel-demo
+# spring-boot-ng4-upload-demo
 
 Demo project on how upload and process excel file in the spring boot + Web Socket + Angular 4
 

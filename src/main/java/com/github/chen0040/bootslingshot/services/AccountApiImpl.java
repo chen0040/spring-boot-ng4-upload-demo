@@ -4,6 +4,7 @@ import com.github.chen0040.bootslingshot.utils.StringUtils;
 import com.github.chen0040.bootslingshot.viewmodels.Account;
 import com.github.chen0040.bootslingshot.viewmodels.LoginObj;
 import com.github.chen0040.bootslingshot.viewmodels.TokenObj;
+import com.github.chen0040.bootslingshot.viewmodels.UsernameAndToken;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
 import org.slf4j.Logger;
@@ -89,6 +90,33 @@ public class AccountApiImpl implements AccountApi {
             if(sessionToken.equals(token)) {
                 sessions.remove(sessionToken);
                 tokenObj.setUsername("");
+                break;
+            }
+        }
+        return tokenObj;
+    }
+
+    @Override
+    public UsernameAndToken validateToken(String token) {
+        logger.info("validating user: {}", token);
+        UsernameAndToken tokenObj = new UsernameAndToken();
+        tokenObj.setToken(token);
+        tokenObj.setUsername("");
+        for(String sessionToken : sessions.keySet()) {
+            if(sessionToken.equals(token)) {
+                Account account = sessions.get(token);
+                String username = account.getUsername();
+                tokenObj.setUsername(username);
+
+                executor.submit(() -> {
+                    try {
+                        Thread.sleep(3000L);
+                        logger.info("send websocket message on username and token validate successfully ...");
+                        webSocketService.send(account.getToken(), "validated", "Welcome, " + username);
+                    }catch(Exception ex) {
+                        logger.error("Failed to send web socket validated message", ex);
+                    }
+                });
                 break;
             }
         }

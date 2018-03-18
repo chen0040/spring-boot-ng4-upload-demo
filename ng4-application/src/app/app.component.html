@@ -3,6 +3,10 @@
   <h1>
     Welcome to {{title}}!
   </h1>
+  <ul>
+    <li>username: admin password: admin</li>
+    <li>username: user password: user</li>
+  </ul>
 </div>
 
 <div *ngIf="!authenticated">
@@ -16,34 +20,77 @@
 </div>
 
 <div *ngIf="authenticated">
-  Welcome! {{loginObj.username}}
-  <button class="btn btn-danger btn-sm" (click)="logout()">Logout</button>
+  <div class="panel panel-primary panel-widget">
+    <div class="panel-heading">
+      <i class="fa fa-shopping-bag" aria-hidden="true"></i> Upload Binary File
+    </div>
 
-  <br />
-  <hr />
-
-  <h1>Demo for Excel Upload</h1>
-
-  <a href="http://localhost:9300/samples/products.xlsx" target="_blank">Excel Sample Download</a>
-
-  <hr />
-
-  <a class="btn btn-sm btn-primary" href="javascript:;">Upload Excel File
-    <input [(ngModel)]="excelUpload.FilePath" (change)="fileChange($event)" name="ExcelFPath"
-           size="10" type="file"></a>
-
-
-  <br />
-  <hr />
-
-<h2>Websocket message from spring-boot-application: </h2>
-<table *ngIf="messages">
-  <tr *ngFor="let message of messages">
-    <td>
-      {{message}}
-    </td>
-  </tr>
-</table>
-
-
+    <div class="panel-body">
+    </div>
 </div>
+
+  <div *ngIf="authenticated">
+    <div class="panel panel-primary panel-widget">
+      <div class="panel-heading">
+        <i class="fa fa-shopping-bag" aria-hidden="true"></i> Listing Binary Files
+      </div>
+
+      <div class="panel-body">
+      </div>
+    </div>
+
+    <div *ngIf="authenticated">
+      <div class="panel panel-primary panel-widget">
+        <div class="panel-heading">
+          <i class="fa fa-shopping-bag" aria-hidden="true"></i> Upload Image Files
+        </div>
+
+        <div class="panel-body">
+        </div>
+      </div>
+
+
+<div *ngIf="authenticated">
+    <div class="panel panel-primary panel-widget">
+      <div class="panel-heading">
+        <i class="fa fa-shopping-bag" aria-hidden="true"></i> Listing Binary Files
+      </div>
+
+      <div class="panel-body">
+        Welcome! {{loginObj.username}}
+        <button class="btn btn-danger btn-sm" (click)="logout()">Logout</button>
+
+        <br />
+        <hr />
+
+        <h1>Demo for Excel Upload</h1>
+
+        <a href="http://localhost:9300/samples/products.xlsx" target="_blank">Excel Sample Download</a>
+
+        <hr />
+
+        <a class="btn btn-sm btn-primary" href="javascript:;">Upload Excel File
+          <input [(ngModel)]="excelUpload.FilePath" (change)="fileChange($event)" name="ExcelFPath"
+                 size="10" type="file"></a>
+
+      </div>
+    </div>
+
+  <div *ngIf="authenticated">
+    <div class="panel panel-primary panel-widget">
+      <div class="panel-heading">
+        <i class="fa fa-shopping-bag" aria-hidden="true"></i> Websocket message from spring-boot-application:
+      </div>
+
+      <div class="panel-body">
+        <h2> </h2>
+        <table *ngIf="messages">
+          <tr *ngFor="let message of messages">
+            <td>
+              {{message}}
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
