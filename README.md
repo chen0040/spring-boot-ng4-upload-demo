@@ -7,6 +7,8 @@ Demo project on how upload and process excel file in the spring boot + Web Socke
 * Upload and process Excel file
 * Allow Async callback and websocket to report progress on loading data into database (mocked database used here)
 * Allow Large file upload and long running process using guava concurrency
+* download binary or image file from server using JSON POST in Angular 4
+* Upload binary and image file to server in Angular 4
 
 # Usage
 
@@ -43,9 +45,13 @@ The websocket implementation that subscribe to "/topics/" + token + "/event" web
 
 ### Upload Binary File
 
-
+Once at http://localhost:8080, click "Select File" button under the section "Upload Binary File", and select the binary
+file to upload, the uploaded binary file will be displayed in the "Listing Binary Files" section.
 
 ### Upload Image File
+
+Once at http://localhost:8080, click "Select File" button under the section "Upload Image File", and select the image
+file to upload, the uploaded binary file will be displayed in the "Listing Image Files" section.
 
 ### Upload Excel File
 
