@@ -141,14 +141,42 @@ export class AppService {
     const req = {
       token: this._accountService.getToken()
     };
-    this._http.post('./erp/binary-obj/find-binary-obj-by-id?id=' + id, req)
-      .map((response: Response) => {
-        return [response.text()];
-      }).subscribe(data => {
-      let blob = new Blob(data, { type: "application/octet-stream"});
-      var url= window.URL.createObjectURL(blob);
-      window.open(url);
+
+    Observable.create(observer => {
+
+      let xhr = new XMLHttpRequest();
+
+      xhr.open('POST', './erp/binary-obj/find-binary-obj-by-id?id=' + id, true);
+      xhr.setRequestHeader('Content-type', 'application/json');
+      xhr.responseType='blob';
+
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            console.log('yes');
+
+            var contentType = "application/octet-stream";
+            var blob = new Blob([xhr.response], { type: contentType });
+            console.log(blob);
+            observer.next(blob);
+            observer.complete();
+          } else {
+            observer.error(xhr.response);
+          }
+        }
+      };
+      xhr.send(JSON.stringify(req));
+
+    }).subscribe(blob => {
+      console.log(blob);
+      let reader = new FileReader();
+      reader.onloadend = function () {
+        window.location.href = reader.result;
+      };
+
+      reader.readAsDataURL(blob);
     });
+
   }
 
 
@@ -156,14 +184,42 @@ export class AppService {
     const req = {
       token: this._accountService.getToken()
     };
-    this._http.post('./erp/image-obj/find-image-obj-by-id?id=' + id, req)
-      .map((response: Response) => {
-        return [response.text()];
-      }).subscribe(data => {
-      let blob = new Blob(data, { type: "application/octet-stream"});
-      var url= window.URL.createObjectURL(blob);
-      window.open(url);
+
+    Observable.create(observer => {
+
+      let xhr = new XMLHttpRequest();
+
+      xhr.open('POST', './erp/image-obj/find-image-obj-by-id?id=' + id, true);
+      xhr.setRequestHeader('Content-type', 'application/json');
+      xhr.responseType='blob';
+
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            console.log('yes');
+
+            var contentType = "application/octet-stream";
+            var blob = new Blob([xhr.response], { type: contentType });
+            console.log(blob);
+            observer.next(blob);
+            observer.complete();
+          } else {
+            observer.error(xhr.response);
+          }
+        }
+      };
+      xhr.send(JSON.stringify(req));
+
+    }).subscribe(blob => {
+      console.log(blob);
+      let reader = new FileReader();
+      reader.onloadend = function () {
+        window.location.href = reader.result;
+      };
+
+      reader.readAsDataURL(blob);
     });
+
   }
 
 }
