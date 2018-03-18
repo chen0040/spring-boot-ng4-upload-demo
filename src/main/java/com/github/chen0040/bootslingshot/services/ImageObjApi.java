@@ -11,4 +11,6 @@ public interface ImageObjApi {
     ImageObj findFirstByParentId(long parentId, TokenObj tokenObj);
 
     ImageObj findById(long id, TokenObj tokenObj);
+
+    void save(ImageObj bo);
 }

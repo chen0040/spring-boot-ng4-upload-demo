@@ -26,6 +26,9 @@
     </div>
 
     <div class="panel-body">
+      <a class="btn btn-sm btn-primary" href="javascript:;">Upload Binary File
+        <input [(ngModel)]="binaryObjUpload.FilePath" (change)="binaryFileChange($event)" name="BinaryObjectFPath"
+               size="10" type="file"></a>
     </div>
 </div>
 
@@ -36,24 +39,54 @@
       </div>
 
       <div class="panel-body">
+        <table class="table">
+          <tr *ngFor="let binaryObjId of binaryObjList">
+            <td>{{binaryObjId}}</td>
+            <td>
+              <button class="btn btn-primary btn-xs" (click)="downloadBinaryObj(binaryObjId)">Download</button>
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
 
     <div *ngIf="authenticated">
       <div class="panel panel-primary panel-widget">
         <div class="panel-heading">
-          <i class="fa fa-shopping-bag" aria-hidden="true"></i> Upload Image Files
+          <i class="fa fa-shopping-bag" aria-hidden="true"></i> Upload Image File
         </div>
 
         <div class="panel-body">
+          <a class="btn btn-sm btn-primary" href="javascript:;">Upload Image File
+            <input [(ngModel)]="imageObjUpload.FilePath" (change)="imageFileChange($event)" name="ImgeObjectFPath"
+                   size="10" type="file"></a>
         </div>
       </div>
 
+      <div *ngIf="authenticated">
+        <div class="panel panel-primary panel-widget">
+          <div class="panel-heading">
+            <i class="fa fa-shopping-bag" aria-hidden="true"></i> List Image Files
+          </div>
 
-<div *ngIf="authenticated">
+          <div class="panel-body">
+            <table class="table">
+              <tr *ngFor="let imageObjId of imageObjList">
+                <td>{{imageObjId}}</td>
+                <td>
+                  <button class="btn btn-primary btn-xs" (click)="downloadImageObj(imageObjId)">Download</button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+
+
+        <div *ngIf="authenticated">
     <div class="panel panel-primary panel-widget">
       <div class="panel-heading">
-        <i class="fa fa-shopping-bag" aria-hidden="true"></i> Listing Binary Files
+        <i class="fa fa-shopping-bag" aria-hidden="true"></i> Upload Excel
       </div>
 
       <div class="panel-body">
@@ -70,7 +103,7 @@
         <hr />
 
         <a class="btn btn-sm btn-primary" href="javascript:;">Upload Excel File
-          <input [(ngModel)]="excelUpload.FilePath" (change)="fileChange($event)" name="ExcelFPath"
+          <input [(ngModel)]="excelUpload.FilePath" (change)="excelFileChange($event)" name="ExcelFPath"
                  size="10" type="file"></a>
 
       </div>

@@ -5,6 +5,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import {$WebSocket, WebSocketSendMode} from 'angular2-websocket/angular2-websocket';
+import {AccountService} from "./account.service";
 
 
 @Injectable()
@@ -13,7 +14,8 @@ export class AppService {
   private ws: $WebSocket;
   private subscribers = [];
 
-  constructor(private _http : Http) {
+  constructor(private _http : Http,
+              private _accountService: AccountService) {
 
   }
 
@@ -99,7 +101,69 @@ export class AppService {
 
   }
 
+  uploadBinaryFile(formData: any) {
+
+    var headers = new Headers();
+
+    return this._http.post('./erp/binary-obj/upload' , formData, { headers: headers, method: 'POST' })
+      .map((res: Response) => res.json());
+
+  }
+
+  uploadImageFile(formData: any) {
+
+    var headers = new Headers();
+
+    return this._http.post('./erp/image-obj/upload' , formData, { headers: headers, method: 'POST' })
+      .map((res: Response) => res.json());
+
+  }
+
+  getImageObjIdList(): Observable<number[]> {
+    const req = {
+      token: this._accountService.getToken()
+    };
+    return this._http.post('./erp/image-obj/find-all-ids-by-tag?tag=' + 'image-' + this._accountService.getUsername(), req)
+      .map((response: Response) => <number[]> response.json())
+      .do(data => console.log('All: ' + JSON.stringify(data)));
+  }
+
+  getBinaryObjIdList(): Observable<number[]> {
+    const req = {
+      token: this._accountService.getToken()
+    };
+    return this._http.post('./erp/binary-obj/find-all-ids-by-tag?tag=' + 'bo-' + this._accountService.getUsername(), req)
+      .map((response: Response) => <number[]> response.json())
+      .do(data => console.log('All: ' + JSON.stringify(data)));
+  }
+
+  getBinaryObjById(id: number) {
+    const req = {
+      token: this._accountService.getToken()
+    };
+    this._http.post('./erp/binary-obj/find-binary-obj-by-id?id=' + id, req)
+      .map((response: Response) => {
+        return [response.text()];
+      }).subscribe(data => {
+      let blob = new Blob(data, { type: "application/octet-stream"});
+      var url= window.URL.createObjectURL(blob);
+      window.open(url);
+    });
+  }
 
 
+  getImageObjById(id: number) {
+    const req = {
+      token: this._accountService.getToken()
+    };
+    this._http.post('./erp/image-obj/find-image-obj-by-id?id=' + id, req)
+      .map((response: Response) => {
+        return [response.text()];
+      }).subscribe(data => {
+      let blob = new Blob(data, { type: "application/octet-stream"});
+      var url= window.URL.createObjectURL(blob);
+      window.open(url);
+    });
+  }
 
 }

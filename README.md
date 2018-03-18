@@ -40,6 +40,15 @@ any account below:
 
 The websocket implementation that subscribe to "/topics/" + token + "/event" websocket topic of the spring-boot-application can be found in the app.service.ts and app.component.ts
 
+
+### Upload Binary File
+
+
+
+### Upload Image File
+
+### Upload Excel File
+
 Once at http://localhost:8080, click "Excel Sample Download" to download a csv sample, then click "Choose File" to load the
 downloaded Excel sample,and then click "Upload Excel", you will notice that as the product is being saved on the remote server,
 the web page keeps on updating the progress (done using websocket and sockjs). At the backend, the Thread.sleep is used to simulate

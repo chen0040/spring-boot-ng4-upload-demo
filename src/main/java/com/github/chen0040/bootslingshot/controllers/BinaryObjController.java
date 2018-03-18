@@ -87,7 +87,7 @@ public class BinaryObjController {
 
     @RequestMapping(value = "/erp/binary-obj/upload", method = RequestMethod.POST)
     public @ResponseBody
-    Map<String, Object> uploadBanner(@RequestParam("id") long id,
+    Map<String, Object> uploadBinaryObj(@RequestParam("id") long id,
                                      @RequestParam("file") MultipartFile file,
                                      @RequestParam("secret") String secret,
                                      @RequestParam("tag") String tag,
@@ -141,6 +141,7 @@ public class BinaryObjController {
             return result;
         }
     }
+
 
 
 }

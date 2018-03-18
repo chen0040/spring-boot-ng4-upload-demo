@@ -26,7 +26,9 @@ export class AccountService {
         return token;
     }
 
-
+    getUsername(): string {
+      return this.username;
+    }
 
 
     validate(): Observable<IToken> {

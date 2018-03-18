@@ -21,6 +21,14 @@ export class AppComponent implements OnInit {
   excelUpload = {
     FilePath: ''
   };
+  binaryObjUpload = {
+    FilePath: ''
+  };
+  imageObjUpload = {
+    FilePath: ''
+  };
+  imageObjList : number[] = [];
+  binaryObjList : number[] = [];
 
   constructor(private _appService: AppService,
               private _accountService: AccountService) {
@@ -41,6 +49,8 @@ export class AppComponent implements OnInit {
         this.loginObj.username = tokenObj.username;
         this.authenticated = this._accountService.authenticated;
         this._appService.connectWebsocket(this._accountService.getToken());
+        this.loadBinaryObjList();
+        this.loadImageObjList();
       },
       error => this.errorMessage = <any>error);
 
@@ -79,7 +89,87 @@ export class AppComponent implements OnInit {
       error => this.errorMessage = <any>error);
   }
 
-  fileChange(event) {
+  loadImageObjList() {
+    this._appService.getImageObjIdList().subscribe(idList => {
+      this.imageObjList = idList;
+    })
+  }
+
+  loadBinaryObjList() {
+    this._appService.getBinaryObjIdList().subscribe(idList => {
+      this.binaryObjList = idList;
+    })
+  }
+
+  downloadBinaryObj(binaryObjId: number) {
+    this._appService.getBinaryObjById(binaryObjId);
+  }
+
+  downloadImageObj(imageObjId: number) {
+
+    this._appService.getImageObjById(imageObjId);
+  }
+
+  binaryFileChange(event) {
+    let fileList: FileList = event.target.files;
+    if(fileList.length > 0) {
+      let file: File = fileList[0];
+      let fileSize:number=fileList[0].size;
+      if(fileSize<=10485760)
+      {
+        let formData:FormData = new FormData();
+        formData.append('id', '0');
+        formData.append('file',file);
+        formData.append('token',this._accountService.getToken());
+        formData.append('secret', 'wizlah');
+        formData.append('tag', 'bo-' + this._accountService.getUsername());
+        this._appService.uploadBinaryFile(formData).subscribe(val => {
+          alert(val);
+          this.loadBinaryObjList();
+        });
+      }
+      else
+      {
+        alert("File size is exceeded");
+      }
+    }
+    else
+    {
+      alert("Something went Wrong.");
+    }
+  }
+
+  imageFileChange(event) {
+    let fileList: FileList = event.target.files;
+    if(fileList.length > 0) {
+      let file: File = fileList[0];
+      let fileSize:number=fileList[0].size;
+      if(fileSize<=10485760)
+      {
+        let formData:FormData = new FormData();
+        formData.append('id', '0');
+        formData.append('file',file);
+        formData.append('token',this._accountService.getToken());
+        formData.append('parentId', '-1');
+        formData.append('secret', 'wizlah');
+        formData.append('tag', 'image-' + this._accountService.getUsername());
+        this._appService.uploadImageFile(formData).subscribe(val => {
+          alert(val);
+          this.loadImageObjList();
+        });
+      }
+      else
+      {
+        alert("File size is exceeded");
+      }
+    }
+    else
+    {
+      alert("Something went Wrong.");
+    }
+  }
+
+  excelFileChange(event) {
     let fileList: FileList = event.target.files;
     if(fileList.length > 0) {
       let file: File = fileList[0];
