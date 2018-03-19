@@ -102,12 +102,11 @@ export class AppComponent implements OnInit {
   }
 
   downloadBinaryObj(binaryObjId: number) {
-    this._appService.getBinaryObjById(binaryObjId);
+    this._appService.getBinaryObjById(binaryObjId, '.pdf');
   }
 
   downloadImageObj(imageObjId: number) {
-
-    this._appService.getImageObjById(imageObjId);
+    this._appService.getImageObjById(imageObjId, '.png');
   }
 
   binaryFileChange(event) {
@@ -168,6 +167,8 @@ export class AppComponent implements OnInit {
       alert("Something went Wrong.");
     }
   }
+
+
 
   excelFileChange(event) {
     let fileList: FileList = event.target.files;

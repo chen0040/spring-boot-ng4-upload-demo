@@ -137,16 +137,18 @@ export class AppService {
       .do(data => console.log('All: ' + JSON.stringify(data)));
   }
 
-  getBinaryObjById(id: number) {
+  getBinaryObjById(id: number, extension: string) {
     const req = {
       token: this._accountService.getToken()
     };
+
+    const that = this;
 
     Observable.create(observer => {
 
       let xhr = new XMLHttpRequest();
 
-      xhr.open('POST', './erp/binary-obj/find-binary-obj-by-id?id=' + id, true);
+      xhr.open('POST', './erp/binary-obj/find-binary-obj-by-id?id=' + id+ '&extension=' + extension, true);
       xhr.setRequestHeader('Content-type', 'application/json');
       xhr.responseType='blob';
 
@@ -171,25 +173,37 @@ export class AppService {
       console.log(blob);
       let reader = new FileReader();
       reader.onloadend = function () {
-        window.location.href = reader.result;
+        var arrayBuffer = this.result;
+        var data = new Uint8Array(arrayBuffer);
+
+        let a = document.createElement("a");
+        document.body.appendChild(a);
+        //a.style = "display: none";
+        var blob = new Blob([data], { type: "application/octet-stream" }), url = window.URL.createObjectURL(blob);
+        a.href = url;
+        a.download = that.uuid16() + extension;
+        a.click();
+        window.URL.revokeObjectURL(url);
       };
 
-      reader.readAsDataURL(blob);
+      reader.readAsArrayBuffer(blob);
     });
 
   }
 
 
-  getImageObjById(id: number) {
+  getImageObjById(id: number, extension: string) {
     const req = {
       token: this._accountService.getToken()
     };
+
+    const that = this;
 
     Observable.create(observer => {
 
       let xhr = new XMLHttpRequest();
 
-      xhr.open('POST', './erp/image-obj/find-image-obj-by-id?id=' + id, true);
+      xhr.open('POST', './erp/image-obj/find-image-obj-by-id?id=' + id + '&extension=' + extension, true);
       xhr.setRequestHeader('Content-type', 'application/json');
       xhr.responseType='blob';
 
@@ -200,6 +214,7 @@ export class AppService {
 
             var contentType = "application/octet-stream";
             var blob = new Blob([xhr.response], { type: contentType });
+
             console.log(blob);
             observer.next(blob);
             observer.complete();
@@ -214,12 +229,46 @@ export class AppService {
       console.log(blob);
       let reader = new FileReader();
       reader.onloadend = function () {
-        window.location.href = reader.result;
+        var arrayBuffer = this.result;
+        var data = new Uint8Array(arrayBuffer);
+
+        let a = document.createElement("a");
+        document.body.appendChild(a);
+        //a.style = "display: none";
+        var blob = new Blob([data], { type: "application/octet-stream" }), url = window.URL.createObjectURL(blob);
+        a.href = url;
+        a.download = that.uuid16() + extension;
+        a.click();
+        window.URL.revokeObjectURL(url);
       };
 
-      reader.readAsDataURL(blob);
+      reader.readAsArrayBuffer(blob);
     });
 
+  }
+
+  uuid16 (): string {
+    let uuid = '', ii;
+    for (ii = 0; ii < 16; ii += 1) {
+      switch (ii) {
+        case 8:
+        case 20:
+          uuid += '-';
+          uuid += (Math.random() * 16 | 0).toString(16);
+          break;
+        case 12:
+          uuid += '-';
+          uuid += '4';
+          break;
+        case 16:
+          uuid += '-';
+          uuid += (Math.random() * 4 | 8).toString(16);
+          break;
+        default:
+          uuid += (Math.random() * 16 | 0).toString(16);
+      }
+    }
+    return uuid;
   }
 
 }

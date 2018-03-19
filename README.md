@@ -43,10 +43,10 @@ any account below:
 The websocket implementation that subscribe to "/topics/" + token + "/event" websocket topic of the spring-boot-application can be found in the app.service.ts and app.component.ts
 
 
-### Upload Binary File
+### Upload PDF File
 
-Once at http://localhost:8080, click "Select File" button under the section "Upload Binary File", and select the binary
-file to upload, the uploaded binary file will be displayed in the "Listing Binary Files" section.
+Once at http://localhost:8080, click "Select File" button under the section "Upload PDF File", and select the binary
+file to upload, the uploaded binary file will be displayed in the "Listing PDF Files" section.
 
 ### Upload Image File
 
