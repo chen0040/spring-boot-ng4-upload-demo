@@ -120,7 +120,7 @@ export class AppComponent implements OnInit {
         formData.append('id', '0');
         formData.append('file',file);
         formData.append('token',this._accountService.getToken());
-        formData.append('secret', 'wizlah');
+        formData.append('secret', 'secret');
         formData.append('tag', 'bo-' + this._accountService.getUsername());
         this._appService.uploadBinaryFile(formData).subscribe(val => {
           alert(val);
@@ -150,7 +150,7 @@ export class AppComponent implements OnInit {
         formData.append('file',file);
         formData.append('token',this._accountService.getToken());
         formData.append('parentId', '-1');
-        formData.append('secret', 'wizlah');
+        formData.append('secret', 'secret');
         formData.append('tag', 'image-' + this._accountService.getUsername());
         this._appService.uploadImageFile(formData).subscribe(val => {
           alert(val);

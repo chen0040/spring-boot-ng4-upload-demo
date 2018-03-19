@@ -105,7 +105,7 @@ public class BinaryObjController {
             return result;
         }
 
-        if(!secret.equals("wizlah")){
+        if(!secret.equals("secret")){
             result.put("success", false);
             result.put("error", "Invalid Secret");
             result.put("id", "");
