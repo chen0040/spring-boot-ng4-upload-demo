@@ -1,6 +1,6 @@
 # spring-boot-ng4-upload-demo
 
-Demo project on how upload and process excel file in the spring boot + Web Socket + Angular 4
+Demo project on how upload and process excel, binary file (.e.g, pdf) and image file in the spring boot + Web Socket + Angular 4
 
 # Features
 
